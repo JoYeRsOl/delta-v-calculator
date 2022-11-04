@@ -4,7 +4,7 @@ volumes:
   postgres-storage:
 
 networks:
-  banxe-network:
+  network:
     name: network
 
 services:
@@ -27,7 +27,7 @@ services:
     image: adminer
     container_name: adminer
     environment:
-      - ADMINER_SERVER=banxe-postgres:5432
+      - ADMINER_SERVER=postgres:5432
       - ADMINER_USERNAME=app
       - ADMINER_PASSWORD=app
       - ADMINER_DRIVER=pgsql
