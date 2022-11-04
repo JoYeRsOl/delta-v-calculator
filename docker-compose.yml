@@ -1,0 +1,41 @@
+version: "3.7"
+
+volumes:
+  postgres-storage:
+
+networks:
+  banxe-network:
+    name: network
+
+services:
+  postgres:
+    image: postgres:11
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app
+      - PGDATA=/data/postgres
+    volumes:
+      - postgres-storage:/data/postgres
+    networks:
+      network:
+    ports:
+      - "5434:5432"
+    hostname: postgres
+    restart: always
+  adminer:
+    image: adminer
+    container_name: adminer
+    environment:
+      - ADMINER_SERVER=banxe-postgres:5432
+      - ADMINER_USERNAME=app
+      - ADMINER_PASSWORD=app
+      - ADMINER_DRIVER=pgsql
+      - ADMINER_PLUGINS=tables-filter tinymce
+      - ADMINER_DESIGN=lucas-sandery
+    networks:
+      network:
+    ports:
+      - "8082:8080"
+    hostname: postgres
+    restart: always
